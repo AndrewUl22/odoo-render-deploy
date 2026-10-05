@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portfolio_page_template" name="Portfolio Page">
+        <t t-call="website.layout">
+            <div id="wrap" class="portfolio-page">
+
+                <!-- Hero section -->
+                <section class="portfolio-hero">
+                    <div class="container text-center" style="padding-top:28px; padding-bottom:28px;">
+                        <img class="portfolio-avatar mx-auto mb-3"
+                             t-attf-src="/portfolio/static/src/img/avatar.png" alt="Andrii Ulianov"/>
+                        <h1 style="margin-bottom:6px;" t-esc="name"/>
+                        <p class="lead" style="margin-bottom:40px;" t-esc="tagline"/>
+                        <a t-att-href="github_url" target="_blank"
+                           class="btn btn-lg hero-cta">
+                            <i class="fa fa-github me-2"/>View code on GitHub
+                        </a>
+                        <p class="hero-note mt-4">Attended Odoo Experience 2026</p>
+                    </div>
+                </section>
+
+                <!-- Skills section -->
+                <section class="portfolio-skills py-4">
+                    <div class="container text-center">
+                        <span t-foreach="skills" t-as="skill"
+                              class="badge portfolio-badge">
+                            <i class="fa fa-check-circle me-1"/><t t-esc="skill"/>
+                        </span>
+                    </div>
+                </section>
+
+                <!-- Project showcase -->
+                <section class="portfolio-project py-5">
+                    <div class="container">
+                        <h2 class="text-center mb-4">Project: Library</h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>What it is</h4>
+                                <p>
+                                    A training Odoo module for managing a library:
+                                    tracking books, members, and loan history.
+                                    Built from scratch to learn the Odoo framework
+                                    before applying for a Back-end Developer position.
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>What's inside</h4>
+                                <ul>
+                                    <li>Three related models: book / member / loan</li>
+                                    <li>Computed fields (book availability)</li>
+                                    <li>Access rights via ir.model.access.csv</li>
+                                    <li>Custom views: form, list, search</li>
+                                    <li>Constraint validation (can't lend an already-borrowed book)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <em>Interface screenshots — add here once
+                                library is populated with demo data.</em>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Other projects -->
+                <section class="portfolio-other-projects py-5">
+                    <div class="container">
+                        <h2 class="text-center mb-4"><i class="fa fa-folder-open me-2"/>Other Projects</h2>
+                        <div class="row">
+                            <div t-foreach="other_projects" t-as="project" class="col-md-4 mb-4">
+                                <div class="project-card h-100">
+                                    <h4 t-esc="project['name']"/>
+                                    <p t-esc="project['description']"/>
+                                    <p class="text-muted small" t-esc="project['stack']"/>
+                                    <div class="mt-3">
+                                        <a t-att-href="project['demo_url']" target="_blank"
+                                           class="project-link project-link-demo">
+                                            <i class="fa fa-external-link me-1"/>Live demo</a>
+                                        <a t-att-href="project['github_url']" target="_blank"
+                                           class="project-link project-link-github">
+                                            <i class="fa fa-github me-1"/>GitHub</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Certificate section -->
+                <section class="portfolio-certificate py-5 text-center">
+                    <div class="container">
+                        <h2 class="mb-4"><i class="fa fa-certificate me-2"/>Certification</h2>
+                        <p class="lead mb-1">
+                            <t t-esc="certificate['title']"/> — <t t-esc="certificate['issuer']"/>
+                        </p>
+                        <p class="mb-1">
+                            Completed <t t-esc="certificate['date']"/> · <t t-esc="certificate['hours']"/> hours
+                            (HTML/CSS, JavaScript, React, Next.js, Node.js, Career Skills)
+                        </p>
+                        <p class="text-muted">Certificate ID: <t t-esc="certificate['unique_id']"/></p>
+                    </div>
+                </section>
+
+                <!-- Contact / footer -->
+                <section class="portfolio-contact text-center" style="padding-top:30px; padding-bottom:30px;">
+                    <div class="container">
+                        <h3><i class="fa fa-envelope-o me-2"/>Contact</h3>
+                        <p><i class="fa fa-envelope me-2"/><a class="contact-link-email" t-att-href="'mailto:' + email" t-esc="email"/></p>
+                        <p><i class="fa fa-phone me-2"/><t t-esc="phone"/></p>
+                        <p>
+                            <a class="contact-link-github" t-att-href="github_url" target="_blank"><i class="fa fa-github me-1"/>GitHub</a>
+                            &#160;·&#160;
+                            <a class="contact-link-linkedin" t-att-href="linkedin_url" target="_blank"><i class="fa fa-linkedin-square me-1"/>LinkedIn</a>
+                        </p>
+                    </div>
+                </section>
+
+            </div>
+        </t>
+    </template>
+
+</odoo>

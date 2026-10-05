@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Books -->
+        <record id="demo_book_1" model="library.book">
+            <field name="name">Clean Code</field>
+            <field name="author">Robert C. Martin</field>
+            <field name="isbn">9780132350884</field>
+            <field name="pages">464</field>
+        </record>
+
+        <record id="demo_book_2" model="library.book">
+            <field name="name">The Pragmatic Programmer</field>
+            <field name="author">David Thomas, Andrew Hunt</field>
+            <field name="isbn">9780135957059</field>
+            <field name="pages">352</field>
+        </record>
+
+        <record id="demo_book_3" model="library.book">
+            <field name="name">Design Patterns</field>
+            <field name="author">Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides</field>
+            <field name="isbn">9780201633610</field>
+            <field name="pages">395</field>
+        </record>
+
+        <record id="demo_book_4" model="library.book">
+            <field name="name">Refactoring</field>
+            <field name="author">Martin Fowler</field>
+            <field name="isbn">9780134757599</field>
+            <field name="pages">448</field>
+        </record>
+
+        <record id="demo_book_5" model="library.book">
+            <field name="name">Domain-Driven Design</field>
+            <field name="author">Eric Evans</field>
+            <field name="isbn">9780321125217</field>
+            <field name="pages">560</field>
+        </record>
+
+        <!-- Members -->
+        <record id="demo_member_alice" model="library.member">
+            <field name="name">Alice Moreau</field>
+            <field name="email">alice.moreau@example.com</field>
+            <field name="phone">+32 470 11 22 33</field>
+        </record>
+
+        <record id="demo_member_bob" model="library.member">
+            <field name="name">Bob Janssens</field>
+            <field name="email">bob.janssens@example.com</field>
+            <field name="phone">+32 470 44 55 66</field>
+        </record>
+
+        <record id="demo_member_carla" model="library.member">
+            <field name="name">Carla De Smet</field>
+            <field name="email">carla.desmet@example.com</field>
+            <field name="phone">+32 470 77 88 99</field>
+        </record>
+
+        <!-- Loans: one ongoing, one overdue, one already returned -->
+        <record id="demo_loan_ongoing" model="library.loan">
+            <field name="book_id" ref="demo_book_1"/>
+            <field name="member_id" ref="demo_member_alice"/>
+            <field name="loan_date" eval="(DateTime.today() - timedelta(days=3)).strftime('%Y-%m-%d')"/>
+            <field name="due_date" eval="(DateTime.today() + timedelta(days=11)).strftime('%Y-%m-%d')"/>
+        </record>
+
+        <record id="demo_loan_overdue" model="library.loan">
+            <field name="book_id" ref="demo_book_2"/>
+            <field name="member_id" ref="demo_member_bob"/>
+            <field name="loan_date" eval="(DateTime.today() - timedelta(days=30)).strftime('%Y-%m-%d')"/>
+            <field name="due_date" eval="(DateTime.today() - timedelta(days=16)).strftime('%Y-%m-%d')"/>
+        </record>
+
+        <record id="demo_loan_returned" model="library.loan">
+            <field name="book_id" ref="demo_book_3"/>
+            <field name="member_id" ref="demo_member_carla"/>
+            <field name="loan_date" eval="(DateTime.today() - timedelta(days=20)).strftime('%Y-%m-%d')"/>
+            <field name="due_date" eval="(DateTime.today() - timedelta(days=6)).strftime('%Y-%m-%d')"/>
+            <field name="return_date" eval="(DateTime.today() - timedelta(days=8)).strftime('%Y-%m-%d')"/>
+            <field name="state">returned</field>
+        </record>
+
+    </data>
+</odoo>

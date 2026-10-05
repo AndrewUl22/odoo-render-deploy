@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500&display=swap');
+
+.portfolio-page {
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    background-color: #F6EFF4;
+}
+
+.portfolio-page .container {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.portfolio-page h1,
+.portfolio-page h2,
+.portfolio-page h3,
+.portfolio-page h4 {
+    font-family: 'Poppins', sans-serif;
+}
+
+.portfolio-hero {
+    background: linear-gradient(135deg, #714B67 0%, #714B67 45%, #017E84 100%);
+    background-image:
+        radial-gradient(circle at 15% 20%, rgba(255,255,255,0.08) 0, transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(255,255,255,0.08) 0, transparent 40%),
+        linear-gradient(135deg, #714B67 0%, #714B67 45%, #017E84 100%);
+    color: #ffffff;
+}
+
+.portfolio-hero h1 {
+    font-weight: 700;
+    font-size: 2.8rem;
+}
+
+.portfolio-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center 15%;
+    border: 3px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    display: block;
+}
+
+.hero-cta {
+    background-color: #ffffff;
+    color: #714B67;
+    border: none;
+    font-weight: 600;
+    border-radius: 30px;
+    padding: 10px 28px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.hero-cta:hover {
+    background-color: #f0ecee;
+    color: #714B67;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.hero-note {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.portfolio-badge {
+    display: inline-flex;
+    align-items: center;
+    margin: 4px;
+    padding: 8px 16px;
+    font-size: 0.95rem;
+    background-color: #ffffff;
+    color: #333;
+    border-radius: 20px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.portfolio-badge:hover {
+    background-color: #EFE0EA;
+    transform: translateY(-1px);
+}
+
+.portfolio-project h2 {
+    font-weight: 600;
+}
+
+.portfolio-other-projects h2 {
+    font-weight: 600;
+}
+
+.project-card {
+    background-color: #ffffff;
+    border: 1px solid #EDE4D3;
+    border-radius: 12px;
+    padding: 8px 22px 22px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.project-card p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.project-card:hover {
+    background-color: #F3EAF0;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+}
+
+.project-link {
+    font-weight: 400;
+    text-decoration: none;
+    margin-right: 28px;
+}
+
+.project-link:hover {
+    text-decoration: underline;
+}
+
+.project-link-demo {
+    color: #2563EB;
+}
+
+.project-link-github {
+    color: #7C3AED;
+}
+
+.project-card h4 {
+    color: #017E84;
+}
+
+.project-card .btn-sm {
+    border-radius: 20px;
+}
+
+.portfolio-certificate h2 {
+    color: #714B67;
+}
+
+.portfolio-contact {
+    background: linear-gradient(315deg, #714B67 0%, #714B67 45%, #017E84 100%);
+    color: #ffffff;
+}
+
+.portfolio-contact h3 {
+    color: #ffffff;
+}
+
+.portfolio-contact a {
+    text-decoration: none;
+    font-weight: 400;
+}
+
+.portfolio-contact a:hover {
+    text-decoration: underline;
+}
+
+.contact-link-email {
+    color: #8FE9E4;
+}
+
+.contact-link-github {
+    color: #A9C9FF;
+}
+
+.contact-link-linkedin {
+    color: #E3C4F5;
+}

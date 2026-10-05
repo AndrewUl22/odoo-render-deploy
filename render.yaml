@@ -1,0 +1,33 @@
+databases:
+  - name: odoo-db
+    databaseName: odoo
+    user: odoo
+    plan: basic-256mb
+
+services:
+  - type: web
+    name: odoo-portfolio
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    envVars:
+      - key: HOST
+        fromDatabase:
+          name: odoo-db
+          property: host
+      - key: PORT
+        fromDatabase:
+          name: odoo-db
+          property: port
+      - key: USER
+        fromDatabase:
+          name: odoo-db
+          property: user
+      - key: PASSWORD
+        fromDatabase:
+          name: odoo-db
+          property: password
+    disk:
+      name: odoo-filestore
+      mountPath: /var/lib/odoo
+      sizeGB: 1

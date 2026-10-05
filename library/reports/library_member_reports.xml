@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_library_member_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>Reading Card</h2>
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <strong t-field="o.name"/><br/>
+                        <span t-field="o.email"/><br/>
+                        <span t-field="o.phone"/>
+                    </div>
+                </div>
+
+                <h3>Current Loans</h3>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Book</th>
+                            <th>Loan Date</th>
+                            <th>Due Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="ongoing_loans"
+                           t-value="o.loan_ids.filtered(lambda l: l.state == 'ongoing')"/>
+                        <tr t-foreach="ongoing_loans" t-as="loan">
+                            <td><span t-field="loan.book_id.name"/></td>
+                            <td><span t-field="loan.loan_date"/></td>
+                            <td><span t-field="loan.due_date"/></td>
+                            <td>
+                                <span t-if="loan.is_overdue" class="text-danger">
+                                    Overdue
+                                </span>
+                                <span t-else="">On time</span>
+                            </td>
+                        </tr>
+                        <tr t-if="not ongoing_loans">
+                            <td colspan="4">No current loans.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_library_member">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="library.report_library_member_document"
+                   t-lang="o.lang"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_library_member" model="ir.actions.report">
+        <field name="name">Reading Card</field>
+        <field name="model">library.member</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">library.report_library_member</field>
+        <field name="report_file">library.report_library_member</field>
+        <field name="print_report_name">'Reading Card - %s' % object.name</field>
+        <field name="binding_model_id" ref="model_library_member"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

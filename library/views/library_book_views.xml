@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_library_book_list" model="ir.ui.view">
+        <field name="name">library.book.list</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <list string="Books">
+                <field name="name"/>
+                <field name="author"/>
+                <field name="isbn"/>
+                <field name="is_available"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_library_book_kanban" model="ir.ui.view">
+        <field name="name">library.book.kanban</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="author"/>
+                <field name="isbn"/>
+                <field name="is_available"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click p-2">
+                            <strong><field name="name"/></strong>
+                            <div class="text-muted">
+                                <field name="author"/>
+                            </div>
+                            <div class="text-muted">
+                                <small>ISBN: <field name="isbn"/></small>
+                            </div>
+                            <div class="mt-1">
+                                <span t-if="record.is_available.raw_value"
+                                      class="badge text-bg-success">
+                                    Available
+                                </span>
+                                <span t-else="" class="badge text-bg-danger">
+                                    On loan
+                                </span>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_library_book_form" model="ir.ui.view">
+        <field name="name">library.book.form</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <form string="Book">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Book title"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="author"/>
+                            <field name="isbn"/>
+                            <field name="pages"/>
+                        </group>
+                        <group>
+                            <field name="is_available"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Loan History">
+                            <field name="loan_ids" readonly="1">
+                                <list>
+                                    <field name="member_id"/>
+                                    <field name="loan_date"/>
+                                    <field name="return_date"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_library_book_search" model="ir.ui.view">
+        <field name="name">library.book.search</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <search string="Search Books">
+                <field name="name"/>
+                <field name="author"/>
+                <field name="isbn"/>
+                <filter string="Available" name="available" domain="[('is_available', '=', True)]"/>
+                <group>
+                    <filter string="Author" name="group_author" context="{'group_by': 'author'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_library_book" model="ir.actions.act_window">
+        <field name="name">Books</field>
+        <field name="res_model">library.book</field>
+        <field name="view_mode">list,kanban,form</field>
+    </record>
+
+</odoo>
