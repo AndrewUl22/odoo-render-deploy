@@ -40,16 +40,24 @@ Once it's live at `https://odoo-portfolio-xxxx.onrender.com`:
    Do the same for `portfolio`.
 5. Visit `/portfolio` on your Render URL — your page should be live.
 
-## 4. Notes
+## 4. Notes (free tier)
 
-- **Free vs paid plan**: the `starter` plan in `render.yaml` is Render's
-  cheapest *paid* tier (~$7/mo) — needed because Odoo takes a while to boot
-  and the free tier's cold-starts/timeouts don't play well with it. The
-  database's `basic-256mb` plan is Render's cheapest paid Postgres tier.
-- **Filestore persistence**: the `disk` section mounts a persistent volume
-  so uploaded files (attachments, the "avatar.png" asset, etc.) survive
-  restarts. Without it, Render's filesystem resets on every deploy.
+- **Cold starts**: the free web service spins down after a period of
+  inactivity. The first request afterward can take 30-50 seconds while it
+  wakes up — normal, not a bug.
+- **Database expiry**: Render's free Postgres instance is **deleted 30 days
+  after creation**. Put a reminder in your calendar — you'll need to spin up
+  a fresh `odoo-db`, reconnect it, and reinstall `library`/`portfolio` when
+  that happens (or upgrade to a paid Postgres plan before then to keep it).
+- **No persistent disk**: free web services can't attach a disk, so Odoo's
+  filestore (uploaded attachments/images added *through the UI*, not the
+  ones baked into the Docker image) resets on every redeploy. Fine for a
+  demo; move to a paid web plan + disk later if that becomes an issue.
 - **Updating modules later**: pushing to the connected branch triggers a
   Render rebuild automatically, but installed-app code changes still need
   an explicit module update (Apps → your module → Upgrade) to take effect
   in the running database.
+- **Upgrading later**: when you want reliability (e.g. before a key
+  interview), just change `plan: free` to `plan: starter` (web) and
+  `plan: basic-256mb` (database) in `render.yaml`, push, and add a persistent
+  disk back for the web service.

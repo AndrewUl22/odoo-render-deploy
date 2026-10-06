@@ -2,14 +2,14 @@ databases:
   - name: odoo-db
     databaseName: odoo
     user: odoo
-    plan: basic-256mb
+    plan: free
 
 services:
   - type: web
     name: odoo-portfolio
     runtime: docker
     dockerfilePath: ./Dockerfile
-    plan: starter
+    plan: free
     envVars:
       - key: HOST
         fromDatabase:
@@ -27,7 +27,6 @@ services:
         fromDatabase:
           name: odoo-db
           property: password
-    disk:
-      name: odoo-filestore
-      mountPath: /var/lib/odoo
-      sizeGB: 1
+    # Note: free web services can't attach a persistent disk, so Odoo's
+    # filestore (uploaded attachments/images) resets on every redeploy.
+    # Fine for a demo; move to a paid plan + disk later if that matters.
