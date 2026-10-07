@@ -1,9 +1,5 @@
 FROM odoo:19
 
-# Render injects env vars at runtime, but the official Odoo image expects
-# the DB password via a file or the PASSWORD env var — both are supported
-# by its entrypoint script, so no extra wiring is needed here.
-
 USER root
 
 # Custom addons: copied into the path already present in the default
@@ -11,8 +7,16 @@ USER root
 COPY ./library /mnt/extra-addons/library
 COPY ./portfolio /mnt/extra-addons/portfolio
 
-RUN chown -R odoo:odoo /mnt/extra-addons
+# Custom start script: passes DB connection args explicitly (DB_HOST,
+# DB_PORT, DB_USER, DB_PASSWORD) and binds Odoo's HTTP server to whatever
+# port Render assigns via $PORT — avoids relying on the base image's
+# auto env-var mapping, whose variable names (HOST/PORT/USER/PASSWORD)
+# collide with Render's own reserved $PORT.
+COPY start.sh /start.sh
+RUN chown -R odoo:odoo /mnt/extra-addons && chmod +x /start.sh
 
 USER odoo
 
 EXPOSE 8069
+
+CMD ["/start.sh"]
