@@ -1,63 +1,58 @@
 # Deploying to Render
 
-## 1. Assemble the deploy repo
+## Repo layout
 
 ```
 odoo-render-deploy/
 ├── Dockerfile
 ├── render.yaml
 ├── start.sh
-├── library/        <- copy of your library module's files
-└── portfolio/      <- copy of your portfolio module's files
+├── library/        <- copy of the library module
+└── portfolio/      <- copy of the portfolio module
 ```
 
-Copy the module folders directly (don't use git submodules — keeps the
-Render build simple).
+## Deploy
 
-## 2. Create the Blueprint on Render
+1. Render dashboard -> **New** -> **Blueprint** -> pick this repo -> **Deploy Blueprint**
+2. Render creates a free PostgreSQL (`odoo-db`) and a Docker web service
+   (`odoo-portfolio`). Later pushes to `main` redeploy automatically.
 
-1. https://dashboard.render.com → **New** → **Blueprint**
-2. Connect GitHub, select the repo
-3. Render reads `render.yaml`, proposes a **Web Service** (`odoo-portfolio`,
-   Docker, free) + a **PostgreSQL** database (`odoo-db`, free)
-4. Click **Deploy Blueprint**
+## First boot (automatic)
 
-## 3. First-time setup (one-off, via the browser)
+Render pre-creates an **empty** database. `start.sh` detects that on boot and
+runs Odoo with `-i base,library,portfolio --with-demo`, so there is no manual
+"create database" step. Watch the service **Logs**: you should see
+`start.sh: fresh database, initialising ...`, then a long run of module
+loading, and finally `admin password set from ADMIN_PASSWORD`.
 
-Once live at `https://odoo-portfolio-xxxx.onrender.com`:
+On the free tier (0.1 CPU, 512 MB RAM) this first install is slow — expect
+10-30 minutes. Keep opening the site every few minutes meanwhile: a free
+service with no incoming traffic spins down, which would interrupt the install.
 
-1. You'll land on the **Database Manager** screen (no database exists yet)
-2. Create a database (any name, e.g. `prod`), set an admin email/password —
-   this becomes your Odoo login
-3. Change the *master password* for the Database Manager itself (defaults to
-   `admin` in the base image) — Settings → General Settings, or ask me for a
-   hardened config
-4. **Apps** → remove the "Apps" filter → search `library` → Install. Same
-   for `portfolio`
-5. Visit `/portfolio` on your Render URL
+Set `ODOO_DEMO=0` in the service's Environment to skip demo data.
 
-## 4. Notes (free tier)
+## Logging in
 
-- **Cold starts**: free web service spins down after inactivity; first
-  request after that takes 30-50s to wake up.
-- **Database expiry**: free Postgres is **deleted 30 days after creation**.
-  Upgrade to a paid plan before then if you want to keep it, or just
-  recreate it when it happens.
-- **No persistent disk**: files uploaded *through the Odoo UI* (not the
-  ones baked into the Docker image) reset on every redeploy.
-- **Updating modules**: pushing to the branch triggers a rebuild
-  automatically, but installed-app code changes still need an explicit
-  module update (Apps → your module → Upgrade).
-- **Upgrading later**: switch `plan: free` → `plan: starter` (web) and
-  `plan: basic-256mb` (database) in `render.yaml`, push, add a persistent
-  disk back.
+- URL: the service's `onrender.com` address
+- Login: `admin`
+- Password: service -> **Environment** -> `ADMIN_PASSWORD` (reveal the value)
+
+The public site is `/portfolio`.
+
+## Free tier notes
+
+- Cold starts: the first request after inactivity takes 30-50 s.
+- The free Postgres is deleted 30 days after creation.
+- No persistent disk: files uploaded through the Odoo UI reset on redeploy.
+- Upgrading: change `plan: free` to `starter` (web) / `basic-256mb` (db).
 
 ## Why `start.sh` exists
 
-The official `odoo` Docker image can auto-wire its DB connection from env
-vars named `HOST`/`PORT`/`USER`/`PASSWORD` — but Render *also* reserves the
-name `PORT` for the port your app must listen on. Using the image's default
-mapping makes Odoo's DB port collide with Render's app port, and the deploy
-times out ("port scan timeout"). `start.sh` sidesteps this: the database
-connection uses `DB_HOST`/`DB_PORT`/`DB_USER`/`DB_PASSWORD` (no collision),
-and Odoo's HTTP server explicitly binds to `$PORT` via `--http-port`.
+1. The official image maps `HOST/PORT/USER/PASSWORD` to the DB connection, but
+   Render reserves `PORT` for the port the app must listen on. The two collide
+   and the deploy times out. `start.sh` uses `DB_*` names and binds Odoo to
+   `$PORT` with `--http-port`.
+2. With exactly one (empty) database visible, Odoo picks it automatically and
+   answers every request with a 500 (`KeyError: 'ir.http'`). `start.sh`
+   initialises that database on first boot instead of relying on the web
+   database manager, which is also switched off (`--no-database-list`).

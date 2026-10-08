@@ -7,13 +7,12 @@ USER root
 COPY ./library /mnt/extra-addons/library
 COPY ./portfolio /mnt/extra-addons/portfolio
 
-# Custom start script: passes DB connection args explicitly (DB_HOST,
-# DB_PORT, DB_USER, DB_PASSWORD) and binds Odoo's HTTP server to whatever
-# port Render assigns via $PORT — avoids relying on the base image's
-# auto env-var mapping, whose variable names (HOST/PORT/USER/PASSWORD)
-# collide with Render's own reserved $PORT.
+# Custom start script (see DEPLOY.md for why it exists). The sed strips
+# Windows line endings in case the file was edited on Windows.
 COPY start.sh /start.sh
-RUN chown -R odoo:odoo /mnt/extra-addons && chmod +x /start.sh
+RUN sed -i 's/\r$//' /start.sh \
+    && chown -R odoo:odoo /mnt/extra-addons \
+    && chmod +x /start.sh
 
 USER odoo
 
