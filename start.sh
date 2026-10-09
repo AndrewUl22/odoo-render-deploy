@@ -5,6 +5,9 @@ set -e
 
 DB_ARGS="--db_host=$DB_HOST --db_port=$DB_PORT --db_user=$DB_USER --db_password=$DB_PASSWORD"
 
+# The free tier's disk is wiped on every restart; see repair.py.
+python3 /repair.py || echo "start.sh: repair step failed (ignored)"
+
 # Is the Render-provided database already initialised with our modules?
 if python3 - <<'PY'
 import os, sys

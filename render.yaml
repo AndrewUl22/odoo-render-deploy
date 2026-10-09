@@ -35,6 +35,5 @@ services:
       # Read it in the dashboard: service -> Environment.
       - key: ADMIN_PASSWORD
         generateValue: true
-    # Note: free web services can't attach a persistent disk, so Odoo's
-    # filestore (uploaded attachments/images) resets on every redeploy.
-    # Fine for a demo; move to a paid plan + disk later if that matters.
+    # Free web services can't attach a persistent disk. repair.py (run by
+    # start.sh on every boot) keeps Odoo's attachments in the database instead.

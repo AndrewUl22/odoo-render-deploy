@@ -7,10 +7,11 @@ USER root
 COPY ./library /mnt/extra-addons/library
 COPY ./portfolio /mnt/extra-addons/portfolio
 
-# Custom start script (see DEPLOY.md for why it exists). The sed strips
-# Windows line endings in case the file was edited on Windows.
+# Custom start scripts (see DEPLOY.md for why they exist). The sed strips
+# Windows line endings in case a file was edited on Windows.
 COPY start.sh /start.sh
-RUN sed -i 's/\r$//' /start.sh \
+COPY repair.py /repair.py
+RUN sed -i 's/\r$//' /start.sh /repair.py \
     && chown -R odoo:odoo /mnt/extra-addons \
     && chmod +x /start.sh
 
