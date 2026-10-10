@@ -174,3 +174,55 @@
 .contact-link-linkedin {
     color: #E3C4F5;
 }
+
+.library-cta {
+    display: inline-block;
+    background-color: #714B67;
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 30px;
+    padding: 10px 26px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.library-cta:hover {
+    background-color: #5D3D55;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.portfolio-gallery {
+    margin-top: 12px;
+}
+
+.portfolio-shot {
+    margin: 0 0 24px 0;
+}
+
+.portfolio-shot a {
+    display: block;
+}
+
+.portfolio-shot img {
+    width: 100%;
+    height: auto;
+    background-color: #ffffff;
+    border: 1px solid #E4D9DF;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.portfolio-shot a:hover img {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+}
+
+.portfolio-shot figcaption {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: #6B5A66;
+    text-align: center;
+}

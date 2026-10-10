@@ -5,8 +5,21 @@ set -e
 
 DB_ARGS="--db_host=$DB_HOST --db_port=$DB_PORT --db_user=$DB_USER --db_password=$DB_PASSWORD"
 
-# The free tier's disk is wiped on every restart; see repair.py.
-python3 /repair.py || echo "start.sh: repair step failed (ignored)"
+# The free tier's disk is wiped on every restart; see repair.py. Exit code 10
+# means "new deploy: upgrade the installed modules" (-u), anything else
+# non-zero is ignored.
+UPDATE_ARGS=""
+if python3 /repair.py; then
+    :
+else
+    rc=$?
+    if [ "$rc" = "10" ]; then
+        UPDATE_ARGS="-u library,portfolio"
+        echo "start.sh: new deploy detected, upgrading library + portfolio"
+    else
+        echo "start.sh: repair step failed with code $rc (ignored)"
+    fi
+fi
 
 # Is the Render-provided database already initialised with our modules?
 if python3 - <<'PY'
@@ -80,4 +93,4 @@ PY
     fi
 fi
 
-exec odoo $DB_ARGS -d "$DB_NAME" --db-filter="^${DB_NAME}\$" --no-database-list --http-port="$PORT" $INIT_ARGS
+exec odoo $DB_ARGS -d "$DB_NAME" --db-filter="^${DB_NAME}\$" --no-database-list --http-port="$PORT" $INIT_ARGS $UPDATE_ARGS

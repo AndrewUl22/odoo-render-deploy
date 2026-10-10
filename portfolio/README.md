@@ -1,6 +1,9 @@
 # Portfolio — Odoo Website Portfolio Page
 
-A public page at `/portfolio`, built into Odoo through the Website module and a QWeb template. It showcases my [`library`](https://github.com/AndrewUl22/library) project along with some basic info about me.
+A public page at `/portfolio`, built into Odoo through the Website module and a QWeb template. It showcases my [`library`](https://github.com/AndrewUl22/library) project, my other web projects, and some basic info about me.
+
+**Live demo:** [https://odoo-portfolio-xfy2.onrender.com/portfolio](https://odoo-portfolio-xfy2.onrender.com/portfolio)
+(hosted on Render's free tier, so the first request after a pause can take up to a minute)
 
 ## Installation
 
@@ -20,18 +23,18 @@ cp -r portfolio /path/to/odoo/addons/
 
 ## What's on the page
 
-- Hero section with name, tagline, and a link to GitHub
+- Hero section with photo, name, tagline, and a link to GitHub
 - Skills badges
-- Project showcase: the [`library`](https://github.com/AndrewUl22/library) Odoo module
+- Project showcase: the [`library`](https://github.com/AndrewUl22/library) Odoo module, with a link to the repository and screenshots of its interface
 - Other projects: TravelTrucks RoadNest, LearnLingo, VocabBuilder (live demo + GitHub links each)
 - Certification: GoIT Fullstack Developer course (872h)
 - Contact section: email, phone, GitHub, LinkedIn
 
-## TODO
+The page hides the default Odoo website header and footer (`no_header` / `no_footer` in the QWeb template) so it reads as a standalone page.
 
-- Add screenshots of the `library` interface (book form, loan list) to `static/description/` or an external image host, and embed them in the template via `<img t-att-src="...">`
-- Optional: add a profile photo
-- Optional: add live-stats from `library`
+## Deployment
+
+Deployed on [Render](https://render.com) in a Docker container based on the official `odoo:19` image, together with the `library` module. The deployment setup lives in a separate repository: [odoo-render-deploy](https://github.com/AndrewUl22/odoo-render-deploy).
 
 ## Ideas for further improvement (optional, but a nice touch)
 

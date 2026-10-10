@@ -12,6 +12,7 @@ class PortfolioController(http.Controller):
             'name': 'Andrii Ulianov',
             'tagline': 'Full-Stack JS Developer (React / Next.js / Node.js) — Aspiring Odoo Developer',
             'github_url': 'https://github.com/AndrewUl22',
+            'library_url': 'https://github.com/AndrewUl22/library',
             'linkedin_url': 'https://www.linkedin.com/in/andr%C3%A9-ulianov-717933337/',
             'email': 'anulian22@gmail.com',
             'phone': '+32 465 987 301',

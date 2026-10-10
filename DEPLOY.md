@@ -40,6 +40,15 @@ Set `ODOO_DEMO=0` in the service's Environment to skip demo data.
 
 The public site is `/portfolio`.
 
+## Updating the modules
+
+Push new module code to `main` and Render redeploys. QWeb templates and other
+data files are stored in the database, so they only change after an upgrade.
+`repair.py` notices a new deploy (Render's `RENDER_GIT_COMMIT` differs from the
+one saved in the database) and `start.sh` then starts Odoo with
+`-u library,portfolio`. If a change does not show up, add `ODOO_UPDATE=1` in
+the service's Environment to force an upgrade on the next boot, then remove it.
+
 ## Free tier notes
 
 - Cold starts: the first request after inactivity takes 30-50 s. After a

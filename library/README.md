@@ -6,6 +6,8 @@ A custom Odoo 19 module for managing a small library: books, members, and
 loans, with role-based access, a guided lending workflow, and a printable
 member report.
 
+**Live:** the module runs on Render next to my portfolio page, [https://odoo-portfolio-xfy2.onrender.com/portfolio](https://odoo-portfolio-xfy2.onrender.com/portfolio) (free tier, so the first request after a pause can take up to a minute; the app itself requires a login, see the screenshots below).
+
 ## About the project
 
 Built from scratch as a training project to learn Odoo module development —

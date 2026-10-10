@@ -3,6 +3,8 @@
 
     <template id="portfolio_page_template" name="Portfolio Page">
         <t t-call="website.layout">
+            <t t-set="no_header" t-value="True"/>
+            <t t-set="no_footer" t-value="True"/>
             <div id="wrap" class="portfolio-page">
 
                 <!-- Hero section -->
@@ -48,16 +50,58 @@
                                 <h4>What's inside</h4>
                                 <ul>
                                     <li>Three related models: book / member / loan</li>
-                                    <li>Computed fields (book availability)</li>
-                                    <li>Access rights via ir.model.access.csv</li>
-                                    <li>Custom views: form, list, search</li>
+                                    <li>Computed fields: book availability, overdue loans</li>
+                                    <li>"Lend a Book" wizard for the lending workflow</li>
+                                    <li>Role-based access: two security groups and record rules</li>
+                                    <li>Form, list, search and kanban views</li>
                                     <li>Constraint validation (can't lend an already-borrowed book)</li>
+                                    <li>Printable PDF "Reading Card" report per member</li>
+                                    <li>Unit tests and GitHub Actions CI</li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="text-center mt-4">
-                            <em>Interface screenshots — add here once
-                                library is populated with demo data.</em>
+                        <div class="text-center mt-4 mb-4">
+                            <a t-att-href="library_url" target="_blank" class="library-cta">
+                                <i class="fa fa-github me-2"/>View library on GitHub
+                            </a>
+                        </div>
+                        <div class="row portfolio-gallery">
+                            <div class="col-md-6">
+                                <figure class="portfolio-shot">
+                                    <a href="/portfolio/static/src/img/library_books.png" target="_blank">
+                                        <img src="/portfolio/static/src/img/library_books.png"
+                                             alt="Books catalog" loading="lazy"/>
+                                    </a>
+                                    <figcaption>Books catalog</figcaption>
+                                </figure>
+                            </div>
+                            <div class="col-md-6">
+                                <figure class="portfolio-shot">
+                                    <a href="/portfolio/static/src/img/library_lend.png" target="_blank">
+                                        <img src="/portfolio/static/src/img/library_lend.png"
+                                             alt="Lend a Book wizard" loading="lazy"/>
+                                    </a>
+                                    <figcaption>"Lend a Book" wizard</figcaption>
+                                </figure>
+                            </div>
+                            <div class="col-md-6">
+                                <figure class="portfolio-shot">
+                                    <a href="/portfolio/static/src/img/library_loans.png" target="_blank">
+                                        <img src="/portfolio/static/src/img/library_loans.png"
+                                             alt="Loans overview" loading="lazy"/>
+                                    </a>
+                                    <figcaption>Loans overview (overdue loan highlighted)</figcaption>
+                                </figure>
+                            </div>
+                            <div class="col-md-6">
+                                <figure class="portfolio-shot">
+                                    <a href="/portfolio/static/src/img/library_reading_card.png" target="_blank">
+                                        <img src="/portfolio/static/src/img/library_reading_card.png"
+                                             alt="Reading Card report" loading="lazy"/>
+                                    </a>
+                                    <figcaption>Printable "Reading Card" report</figcaption>
+                                </figure>
+                            </div>
                         </div>
                     </div>
                 </section>
