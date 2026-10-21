@@ -12,7 +12,8 @@ Includes:
   so a regular member only sees their own loans
 - A "Lend a Book" wizard for creating loans
 - A PDF "Reading Card" report per member
-- Demo data (a handful of books, members, and loans)
+- Demo data (a handful of books, members, and loans) and two demo logins
+  (librarian and member) to try both roles
 """,
     'category': 'Tools',
     'author': 'Andrew',
@@ -29,6 +30,7 @@ Includes:
     ],
     'demo': [
         'data/library_demo.xml',
+        'data/library_demo_user.xml',
     ],
     'installable': True,
     'application': True,

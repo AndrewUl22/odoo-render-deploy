@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="demo_user_librarian" model="res.users">
+            <field name="name">Library Demo (Librarian)</field>
+            <field name="login">librarian</field>
+            <field name="password">librarian</field>
+            <field name="group_ids"
+                   eval="[(6, 0, [ref('base.group_user'), ref('group_library_manager')])]"/>
+            <field name="action_id" ref="action_library_book"/>
+        </record>
+
+        <record id="demo_user_member" model="res.users">
+            <field name="name">Library Demo (Member)</field>
+            <field name="login">member</field>
+            <field name="password">member</field>
+            <field name="group_ids"
+                   eval="[(6, 0, [ref('base.group_user'), ref('group_library_user')])]"/>
+            <field name="action_id" ref="action_library_loan"/>
+        </record>
+
+        <record id="demo_book_6" model="library.book">
+            <field name="name">The Mythical Man-Month</field>
+            <field name="author">Frederick P. Brooks Jr.</field>
+            <field name="isbn">9780201835953</field>
+            <field name="pages">336</field>
+        </record>
+
+        <record id="demo_book_7" model="library.book">
+            <field name="name">Code Complete</field>
+            <field name="author">Steve McConnell</field>
+            <field name="isbn">9780735619678</field>
+            <field name="pages">960</field>
+        </record>
+
+        <record id="demo_member_marie" model="library.member">
+            <field name="name">Marie Dupont</field>
+            <field name="email">marie.dupont@example.com</field>
+            <field name="phone">+32 470 12 34 56</field>
+            <field name="user_id" ref="demo_user_member"/>
+        </record>
+
+        <record id="demo_loan_marie_ongoing" model="library.loan">
+            <field name="book_id" ref="demo_book_6"/>
+            <field name="member_id" ref="demo_member_marie"/>
+            <field name="loan_date" eval="(DateTime.today() - timedelta(days=2)).strftime('%Y-%m-%d')"/>
+            <field name="due_date" eval="(DateTime.today() + timedelta(days=12)).strftime('%Y-%m-%d')"/>
+        </record>
+
+        <record id="demo_loan_marie_returned" model="library.loan">
+            <field name="book_id" ref="demo_book_7"/>
+            <field name="member_id" ref="demo_member_marie"/>
+            <field name="loan_date" eval="(DateTime.today() - timedelta(days=25)).strftime('%Y-%m-%d')"/>
+            <field name="due_date" eval="(DateTime.today() - timedelta(days=11)).strftime('%Y-%m-%d')"/>
+            <field name="return_date" eval="(DateTime.today() - timedelta(days=12)).strftime('%Y-%m-%d')"/>
+            <field name="state">returned</field>
+        </record>
+
+    </data>
+</odoo>

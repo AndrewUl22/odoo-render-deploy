@@ -5,12 +5,14 @@
     'description': """
 Training module: a portfolio page embedded in Odoo Website.
 Showcases the library project (models, repository) + basic info about me.
+The website homepage opens the library demo (librarian role).
 """,
     'category': 'Website',
     'author': 'Andrew',
-    'depends': ['website'],
+    'depends': ['website', 'library'],
     'data': [
         'views/portfolio_templates.xml',
+        'data/portfolio_data.xml',
     ],
     'assets': {
         'web.assets_frontend': [
