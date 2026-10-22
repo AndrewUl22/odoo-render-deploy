@@ -13,7 +13,6 @@ class LibraryMember(models.Model):
         string='Related Contact',
         required=True,
         ondelete='restrict',
-        auto_join=True,
     )
     user_id = fields.Many2one(
         'res.users',

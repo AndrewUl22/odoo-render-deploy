@@ -4,16 +4,16 @@
     'summary': 'Training module: library book management',
     'description': """
 Training module for practicing the Odoo framework.
+
 Includes:
+
 - library.book (books)
 - library.member (members, delegated from res.partner via _inherits)
 - library.loan (book loans)
-- Two security groups (User / Librarian) with record rules,
-  so a regular member only sees their own loans
+- Two security groups (User / Librarian) with record rules, so a regular member only sees their own loans
 - A "Lend a Book" wizard for creating loans
 - A PDF "Reading Card" report per member
-- Demo data (a handful of books, members, and loans) and two demo logins
-  (librarian and member) to try both roles
+- Demo data (books, members, loans) and two demo logins (librarian and member) to try both roles
 """,
     'category': 'Tools',
     'author': 'Andrew',
