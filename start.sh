@@ -132,6 +132,12 @@ try:
         cur.execute("DELETE FROM library_book WHERE id NOT IN (" + DEMO_IDS + ")",
                     ("library.book",))
         cur.execute(
+            "UPDATE library_loan SET state = 'ongoing', return_date = NULL WHERE id IN ("
+            "SELECT res_id FROM ir_model_data WHERE module = 'library' "
+            "AND model = 'library.loan' "
+            "AND name IN ('demo_loan_ongoing', 'demo_loan_overdue', 'demo_loan_marie_ongoing'))"
+        )
+        cur.execute(
             "UPDATE library_book b SET is_available = NOT EXISTS ("
             "SELECT 1 FROM library_loan l WHERE l.book_id = b.id AND l.state = 'ongoing')"
         )
